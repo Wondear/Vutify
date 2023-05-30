@@ -12,6 +12,14 @@
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+      <v-layout column align-center>
+        <v-flex class="mt-4">
+          <v-avatar size="100">
+            <img src="../assets/logo.png" />
+          </v-avatar>
+          <p class="mt-5">PyoSeMIn</p>
+        </v-flex>
+      </v-layout>
       <v-list nav dense>
         <v-list-item-group v-bind="group">
           <v-list-item v-for="(item, i) in items" :key="i" :to="item.router">
