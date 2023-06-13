@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>학력사항</h1>
+    <h1>소명 상세페이지</h1>
   </div>
 </template>
