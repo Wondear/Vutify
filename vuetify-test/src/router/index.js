@@ -6,7 +6,6 @@ import Stores from "../views/projectDetail/StoreView.vue";
 import School from "../views/projectDetail/SchoolView.vue";
 import Team from "../views/Team.vue";
 import Bus from "../views/projectDetail/BusView.vue";
-import Educations from "../views/Educations";
 import Sognando from "../views/projectDetail/SognandoView.vue";
 import Calling from "../views/projectDetail/CallingView.vue";
 
@@ -18,10 +17,7 @@ const routes = [
     name: "home",
     component: HomeView,
   },
-  {
-    path: "/about",
-    name: "about",
-  },
+
   {
     path: "/myproject",
     name: "Myproject",
@@ -31,11 +27,6 @@ const routes = [
     path: "/team",
     name: "Team",
     component: Team,
-  },
-  {
-    path: "/educations",
-    name: "Educations",
-    component: Educations,
   },
   {
     path: "/sognando",

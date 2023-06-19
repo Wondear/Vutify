@@ -3,14 +3,14 @@
     <v-main style="margin-top: 20px">
       <v-container>
         <!--정렬버튼-->
-        <v-row class="mb-3 ml-2">
+        <v-row class="mb-3 ml-2" style="align-items: right" justify="end">
           <v-btn small plain @click="sortBy('title')"
             ><span> by project title</span></v-btn
           >
           <v-btn small plain @click="sortBy('person')">
             <span>by person</span></v-btn
           >
-          <v-btn @click="showHelp" icon
+          <v-btn icon @click="GotoDetail()"
             ><v-icon>mdi-help-circle-outline</v-icon></v-btn
           >
         </v-row>
@@ -21,7 +21,6 @@
           falt
           class="gart lighten-4"
         >
-          <!-- router가 !NULL이면 클릭할 수 있다는 표시를 넣고싶음...-->
           <v-row
             no-gutters
             wrap
@@ -43,11 +42,11 @@
               <div class="caption gray--text">Person</div>
               <div>{{ project.person }}</div></v-col
             >
-            <v-col cols="8" sm="5" md="2">
+            <v-col cols="8" sm="5" md="3">
               <div class="caption gray--text">Due</div>
               <div>{{ project.due }}</div></v-col
             >
-            <v-col cols="4" sm="3" md="1" class="pl-4">
+            <v-col cols="4" sm="3" md="2" class="pl-4">
               <div class="caption gray--text">State</div>
               <div :class="`${project.state} state`">
                 {{ project.state }}
@@ -59,32 +58,28 @@
       </v-container>
     </v-main>
 
-    <!-- 모달 -->
-    <div v-if="isModalOpen" class="modal">
-      <!-- 모달 내용 -->
-      <div class="modal-content">
-        <div>
-          <!-- 상세 정보 내용 -->
-          <div class="modal-center">
-            <h2>{{ modalData.title }}</h2>
-          </div>
-          <div class="modal-center" style="padding: 10px">
-            <img :src="modalData.thumnail" :style="getImageStyle" />
-          </div>
-          <p
-            class="modal-center , modal-content-text"
-            style="white-space: pre-line"
-          >
-            {{ modalData.description }}
-          </p>
-        </div>
-        <!-- 모달 닫기 버튼 -->
-        <div class="modal-center">
-          <v-btn :to="modalData.router">상세화면</v-btn
-          ><v-btn @click="closeModal">닫기</v-btn>
-        </div>
-      </div>
-    </div>
+    <v-overlay v-model="isModalOpen">
+      <div
+        class="modal-background"
+        :absolute="true"
+        @click="closeModalOutside"
+      ></div>
+      <v-card max-width="700px" class="context" @click.stop>
+        <v-card-title class="modaltitle">{{ modalData.title }}</v-card-title>
+        <v-img
+          :src="modalData.thumnail"
+          :style="getImageStyle"
+          style="background-color: white"
+        />
+        <v-card-text style="color: white; white-space: pre-line">{{
+          modalData.description
+        }}</v-card-text>
+        <v-card-actions>
+          <v-btn v-if="modalData.router" :to="modalData.router">상세화면</v-btn>
+          <v-btn @click="closeModal">닫기</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-overlay>
   </div>
 </template>
 
@@ -95,7 +90,7 @@ export default {
   data() {
     return {
       isModalOpen: false,
-      modalData: null,
+      modalData: { title: "", description: "", thumnail: "", router: "" },
       hoveredProject: null,
       //추가할 거 -> router (상세페이지)가 있는 프로젝트들의 설명문
       // + 상세페이지로 이동가능한 토스트창 만들기
@@ -125,7 +120,7 @@ export default {
           title: "React로 만드는 미니블로그",
           person: "PyoSeMin",
           due: "2023.05. - 2023.06.",
-          state: "complete",
+          state: "ongoing",
           detail: 0,
         },
         {
@@ -168,8 +163,8 @@ export default {
         {
           name: "소명",
           context:
-            "개발자 2인으로 이루어진 팀 '바우먀우'에서 제작중인 협동 퍼즐게임 소명입니다. 한국 전통 분위기에 플랫포머를 접목시킨 게임으로, 개발 전 과정에 참여해 기획과 스토리텔링등의 역량을 추가로 키울 수 있도록 했습니다.",
-          thumnail: require("../assets/logo.png"),
+            "개발자 2인으로 이루어진 팀 '바우먀우'에서 Unity기반으로 제작중인 협동 퍼즐게임 소명입니다. 한국 전통 분위기에 플랫포머를 접목시킨 게임으로, 개발 전 과정에 참여해 기획과 스토리텔링등의 역량을 추가로 키울 수 있도록 했습니다.",
+          thumnail: require("../assets/thumnail/UnityThumnail.png"),
           router: "Calling",
         },
         {
@@ -201,19 +196,24 @@ export default {
     isLargeImage() {
       const image = new Image();
       image.src = this.modalData.thumnail;
-      return image.width >= 300;
+      return image.height >= 300;
     },
     GotoDetail(prop) {
-      let index = this.projectDetail[prop];
-      // prop에서 필요한 데이터를 추출하고 모달 데이터로 설정
-      this.modalData = {
-        title: index.name,
-        description: index.context,
-        thumnail: index.thumnail,
-        router: index.router,
-      };
-
-      console.log(router);
+      if (prop != null) {
+        let index = this.projectDetail[prop];
+        // prop에서 필요한 데이터를 추출하고 모달 데이터로 설정
+        this.modalData = {
+          title: index.name,
+          description: index.context,
+          thumnail: index.thumnail,
+          router: index.router,
+        };
+      } else {
+        this.modalData = {
+          description:
+            "프로젝트 카드를 클릭하게 되시면 간단한 설명과\n 상세페이지로 갈 수 있는 버튼이 제공됩니다.\n각 프로젝트 페이지들은 왼쪽 상단의 \n메뉴를 이용해서도 이동이 가능합니다",
+        };
+      }
       // 모달 열기
       this.openModal();
     },
@@ -223,14 +223,21 @@ export default {
     closeModal() {
       this.isModalOpen = false; // 모달 닫기
     },
+    closeModalOutside(event) {
+      // 클릭 이벤트가 모달 내부에서 발생한 경우 모달을 닫지 않음
+      if (event.target.classList.contains("v-overlay_content")) {
+        return;
+      }
+      this.closeModal();
+    },
   },
   computed: {
     getImageStyle() {
       // 이미지 크기가 일정 크기 이상인 경우에만 크기를 조절
       if (this.isLargeImage()) {
         return {
-          maxWidth: "50%",
-          maxHeight: "200px",
+          maxWidth: "70%",
+          maxHeight: "70%",
         };
       } else {
         return {}; // 추가적인 스타일이 필요하지 않은 경우 빈 객체 반환
@@ -253,39 +260,9 @@ export default {
 .state.ongoing {
   color: orange;
 }
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 배경 불투명도 조절 가능 */
-  display: flex;
-  align-items: center; /* 수직 가운데 정렬 */
-  justify-content: center; /* 수평 가운데 정렬 */
-}
-.modal-content {
-  border-radius: 10px;
-  background-color: #ffffff; /* 흰색 배경색 */
-  width: 700px; /* 네모낳게 조절 가능 */
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.modal-content-text {
-  width: 650px;
-  background-color: #232030;
-  padding: 10px;
-  border-radius: 5px;
-  color: #ffffff;
-}
-.modal-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.modaltitle {
+  font-weight: bold;
+  font-size: 24px;
 }
 .project.hovered {
   /* 호버 상태에 따른 스타일 변경 */

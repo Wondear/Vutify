@@ -7,43 +7,47 @@
     </div>
     <div v-for="item in displayedItems" :key="item.title">
       <!-- 항목을 표시하는 코드 -->
-      <h1>{{ item.title }}</h1>
-      <p>{{ item.person }}</p>
+      <v-main><component :is="item.component" /></v-main>
       <!-- 나머지 항목 정보를 표시 -->
     </div>
     <v-pagination v-model="currentPage" :length="totalPages"></v-pagination>
   </div>
 </template>
+
 <script>
+import ReactBlog from "./SchoolTemplate/ReactBlog.vue";
+import IotDoor from "./SchoolTemplate/IotDoor.vue";
+import VuePort from "./SchoolTemplate/VuePort.vue";
 export default {
   data() {
     return {
       project: [
         {
           title: "IOT서비스 이용한 도어락",
-          person: "PyoSeMin",
-          due: "2022.05. - 2022.06.",
-          state: "complete",
+          component: IotDoor,
           detail: 0,
         },
         {
           title: "Vue를 이용한 포트폴리오 제작",
-          person: "PyoSeMin",
-          due: "2023.05.25 - ",
-          state: "ongoing",
+          component: VuePort,
+
           detail: 0,
         },
         {
           title: "React로 만드는 미니블로그",
-          person: "PyoSeMin",
-          due: "2023.05.25 - ",
-          state: "ongoing",
+          component: ReactBlog,
+
           detail: 0,
         },
       ],
       itemsPerPage: 1, // 한 페이지에 표시할 항목 개수
       currentPage: 1, // 현재 페이지 번호
     };
+  },
+  components: {
+    ReactBlog,
+    IotDoor,
+    VuePort,
   },
   computed: {
     totalPages() {

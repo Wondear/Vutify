@@ -1,5 +1,0 @@
-<template>
-  <div>
-    <h1>학력사항</h1>
-  </div>
-</template>
