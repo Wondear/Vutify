@@ -11,6 +11,7 @@
           <b> {{ team.teamName }}</b>
         </div>
       </v-row>
+      <!-- 추가해야할 것, 어떤 프로젝트의 팀인지? 기존 설명창? 사용해서 가져오기-->
       <v-row>
         <v-col
           v-for="member in team.member"
@@ -87,12 +88,12 @@ export default {
           member: [
             {
               name: "윤효연",
-              role: "Programer",
+              role: "Back-End Programer",
               avatar: require("../assets/icon/computer.png"),
             },
             {
               name: "표세민",
-              role: "Programer",
+              role: "Front-End Programer",
               avatar: require("../assets/icon/computer.png"),
               me: true,
             },

@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <NavBar />
+    <div style="height: 60px"></div>
     <v-content>
       <router-view></router-view>
     </v-content>

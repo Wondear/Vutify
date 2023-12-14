@@ -71,9 +71,10 @@
           :style="getImageStyle"
           style="background-color: white"
         />
-        <v-card-text style="color: white; white-space: pre-line">{{
-          modalData.description
-        }}</v-card-text>
+        <v-card-text
+          style="color: white; white-space: pre-line"
+          v-html="modalData.description"
+        ></v-card-text>
         <v-card-actions>
           <v-btn v-if="modalData.router" :to="modalData.router">상세화면</v-btn>
           <v-btn @click="closeModal">닫기</v-btn>
@@ -106,7 +107,7 @@ export default {
           title: "빅데이터 기반 상권분석 시스템",
           person: "Team '천재표유리'",
           due: "2023.04.16. - 2023.11.15.",
-          state: "ongoing",
+          state: "complete",
           detail: 4,
         },
         {
@@ -120,7 +121,7 @@ export default {
           title: "React로 만드는 미니블로그",
           person: "PyoSeMin",
           due: "2023.05. - 2023.06.",
-          state: "ongoing",
+          state: "complete",
           detail: 0,
         },
         {
@@ -177,7 +178,7 @@ export default {
         {
           name: "상권 분석 시스템",
           context:
-            "ICT 한이음 멘토링에 소속되어 진행중인 프로젝트로, 빅데이터에 기반하여 사용자가 원하는 상권에 대한 분석, 이에 대한 결과를 출력해주는 웹 서비스입니다.\n",
+            "ICT 한이음 멘토링에 소속되어 진행중인 프로젝트로, 빅데이터에 기반하여 사용자가 원하는 상권에 대한 분석하고, 이에 대한 결과를 출력해주는 웹 서비스입니다.\n<a href='https://github.com/HoRam88/hanium_StoreAnalysis'> github</a>",
           thumnail: require("../assets/thumnail/ICT_logo.png"),
           router: "Stores",
         },

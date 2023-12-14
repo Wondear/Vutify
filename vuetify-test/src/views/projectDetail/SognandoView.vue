@@ -27,11 +27,10 @@
             position: absolute;
             top: 80%;
             left: 55%;
-            transform: translate(-40%, -50%);
-            width: 70%;
-            height: 30%;
+            transform: translate(-40%, -10%);
+            width: 60%;
+            height: 20%;
             padding: 20px;
-            background-color: black;
             color: white;
             font-size: 20px;
           "

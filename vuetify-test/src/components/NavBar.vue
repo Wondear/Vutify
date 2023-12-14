@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav style="position: fixed; top: 0; width: 100%; z-index: 10">
     <v-toolbar>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Pyo SeMin</v-toolbar-title>
@@ -78,7 +78,7 @@ export default {
       text: "My-project",
       detail: [
         { title: "학교 프로젝트", router: "School" },
-        { title: "시각장애인용 BeeBus", router: "Bus" },
+        { title: "시각장애인을 위한 BeeBus", router: "Bus" },
         { title: "빅데이터 상권 분석", router: "Stores" },
         { title: "텍스트 RPG 소그난도", router: "Sognando" },
         { title: "퍼즐 협력게임 소명", router: "Calling" },
